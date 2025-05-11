@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+.custom-menu-class{
+    background-color: #19ac25;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.custom-column-class {
+    background-color: #cc7272;
+    border-radius: 5px;
+    padding: 10px;
+    height: 500px;
+}

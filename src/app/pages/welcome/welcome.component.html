@@ -1,0 +1,150 @@
+<div class="container">
+  <h2>Cascader with SVG Icons Example</h2>
+  <nz-cascader
+    [nzOptions]="nzOptions"
+    [(ngModel)]="selectedValue"
+    (ngModelChange)="onChanges($event)"
+    [nzPlaceHolder]="'Please select'"
+    [nzMenuClassName]="'custom-menu-class'"
+    [nzColumnClassName]="'custom-column-class'"
+    [nzOptionRender]="optionTemplate"
+    style="width: 300px; background-color: aqua;">
+
+  </nz-cascader>
+  <ng-template #optionTemplate let-option let-i="index">
+    <div class="d-flex align-items-center" style="width: 120px; justify-content: space-around;">
+      <span
+        nz-icon
+        [nzType]="option.icon"
+        nzTheme="outline"
+        style="margin-right: 10px;"
+      ></span>
+      <span>{{ option.label }}</span>
+    </div>
+  </ng-template>
+
+  <h2 style="margin-top: 30px;">SVG Icon Examples</h2>
+  <div style="display: flex; gap: 20px; margin-top: 20px;">
+    <!-- Example 1: Using custom SVG icon with namespace -->
+    <div style="text-align: center;">
+      <span
+        nz-icon
+        nzType="custom:star"
+        style="font-size: 32px; color: #0e41a0;"
+      ></span>
+      <p>Custom SVG Star Icon</p>
+      <p><small>(Added via string literal)</small></p>
+    </div>
+
+    <!-- Example 2: Using iconfont icon -->
+    <div style="text-align: center;">
+      <span
+        nz-icon
+        nzIconfont="icon-tuichu"
+        style="font-size: 32px; color: #FF0000;"
+      ></span>
+      <p>Iconfont Icon</p>
+      <p><small>(From external iconfont)</small></p>
+    </div>
+
+    <!-- Example 3: Using SVG icon loaded from assets -->
+    <div style="text-align: center;">
+      <span
+        nz-icon
+        nzType="asset:star"
+        style="font-size: 32px; color: green;"
+      ></span>
+      <p>Asset SVG Star Icon</p>
+      <p><small>(Loaded from assets folder)</small></p>
+    </div>
+
+    <!-- Example 4: Using built-in icon for comparison -->
+    <div style="text-align: center;">
+      <span
+        nz-icon
+        nzType="star"
+        nzTheme="fill"
+        style="font-size: 32px; color: red;"
+      ></span>
+      <p>Built-in Star Icon</p>
+      <p><small>(From @ant-design/icons-angular)</small></p>
+    </div>
+  </div>
+
+  <div style="margin-top: 30px; padding: 20px; background-color: #f5f5f5; border-radius: 5px;">
+    <h3>How to Use SVG Icons with nz-icon</h3>
+    <p>There are three main methods to use SVG icons with nz-icon:</p>
+
+    <h4>1. Register SVG icon directly as a string</h4>
+    <pre style="background-color: #fff; padding: 10px; border-radius: 5px;">
+// In your component
+import {{ '{' }} Component, OnInit {{ '}' }} from '@angular/core';
+import {{ '{' }} NzIconService {{ '}' }} from 'ng-zorro-antd/icon';
+
+@Component({{ '{' }}
+  // component metadata
+{{ '}' }})
+export class YourComponent implements OnInit {{ '{' }}
+  constructor(private iconService: NzIconService) {{ '{' }}{{ '}' }}
+
+  ngOnInit(): void {{ '{' }}
+    this.iconService.addIconLiteral('custom:star', '&lt;svg viewBox="0 0 24 24"&gt;...&lt;/svg&gt;');
+  {{ '}' }}
+{{ '}' }}
+
+// In your template
+&lt;span nz-icon nzType="custom:star"&gt;&lt;/span&gt;
+    </pre>
+
+    <h4>2. Register SVG icon from iconfont</h4>
+    <pre style="background-color: #fff; padding: 10px; border-radius: 5px;">
+// In your component
+import {{ '{' }} Component, OnInit {{ '}' }} from '@angular/core';
+import {{ '{' }} NzIconService {{ '}' }} from 'ng-zorro-antd/icon';
+
+@Component({{ '{' }}
+  // component metadata
+{{ '}' }})
+export class YourComponent implements OnInit {{ '{' }}
+  constructor(private iconService: NzIconService) {{ '{' }}{{ '}' }}
+
+  ngOnInit(): void {{ '{' }}
+    this.iconService.fetchFromIconfont({{ '{' }}
+      scriptUrl: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'
+    {{ '}' }});
+  {{ '}' }}
+{{ '}' }}
+
+// In your template
+&lt;span nz-icon nzIconfont="icon-tuichu"&gt;&lt;/span&gt;
+    </pre>
+
+    <h4>3. Register SVG icon from assets folder</h4>
+    <pre style="background-color: #fff; padding: 10px; border-radius: 5px;">
+// In your component
+import {{ '{' }} Component, OnInit {{ '}' }} from '@angular/core';
+import {{ '{' }} NzIconService {{ '}' }} from 'ng-zorro-antd/icon';
+import {{ '{' }} HttpClient {{ '}' }} from '@angular/common/http';
+
+@Component({{ '{' }}
+  // component metadata
+{{ '}' }})
+export class YourComponent implements OnInit {{ '{' }}
+  constructor(
+    private iconService: NzIconService,
+    private http: HttpClient
+  ) {{ '{' }}{{ '}' }}
+
+  ngOnInit(): void {{ '{' }}
+    this.http.get('assets/icons/star.svg', {{ '{' }} responseType: 'text' {{ '}' }})
+      .subscribe((svg) => {{ '{' }}
+        this.iconService.addIconLiteral('asset:star', svg);
+      {{ '}' }});
+  {{ '}' }}
+{{ '}' }}
+
+// In your template
+&lt;span nz-icon nzType="asset:star"&gt;&lt;/span&gt;
+    </pre>
+  </div>
+</div>

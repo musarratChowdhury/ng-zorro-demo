@@ -1,0 +1,12 @@
+.custom-menu-class{
+    background-color: #19ac25;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.custom-column-class {
+    background-color: #cc7272;
+    border-radius: 5px;
+    padding: 10px;
+    height: 450px;
+}
