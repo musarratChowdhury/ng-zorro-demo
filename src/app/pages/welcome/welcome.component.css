@@ -10,3 +10,26 @@
     padding: 10px;
     height: 450px;
 }
+
+.add-item-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+}
+
+button[type="submit"] {
+  margin-top: 16px;
+}

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ItemService, Item } from '../../services/item.service';
 
 @Component({
   selector: 'app-welcome',
@@ -10,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WelcomeComponent implements OnInit {
   selectedValue: string[] = [];
+  itemForm: FormGroup;
   nzOptions: NzCascaderOption[] = [
     {
       value: 'Custom SVG Icon Example',
@@ -229,13 +232,19 @@ export class WelcomeComponent implements OnInit {
     }
   ];
 
-
-
-
   constructor(
     private iconService: NzIconService,
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private itemService: ItemService
+  ) {
+    this.itemForm = this.fb.group({
+      value: ['', Validators.required],
+      label: ['', Validators.required],
+      icon: ['', Validators.required],
+      isLeaf: [false]
+    });
+  }
 
   ngOnInit(): void {
     // Method 1: Register custom SVG icon from iconfont
@@ -252,9 +261,23 @@ export class WelcomeComponent implements OnInit {
       .subscribe((svg) => {
         this.iconService.addIconLiteral('asset:star', svg);
       });
+
+    // Subscribe to items from service
+    this.itemService.getItems().subscribe(items => {
+      // Update nzOptions with new items
+      this.nzOptions = [...this.nzOptions, ...items];
+    });
   }
 
   onChanges(values: string[]): void {
     console.log(values);
+  }
+
+  onSubmit(): void {
+    if (this.itemForm.valid) {
+      const newItem: Item = this.itemForm.value;
+      this.itemService.addItem(newItem);
+      this.itemForm.reset();
+    }
   }
 }
